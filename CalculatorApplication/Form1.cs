@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CalculatorApplication.Form1.CalculatorClass;
 
 namespace CalculatorApplication
 {
@@ -54,6 +55,27 @@ namespace CalculatorApplication
                     throw new DivideByZeroException("Cannot divide by zero.");
                 }
                 return arg1 / arg2;
+
+
+            }
+
+
+            public delegate double CalculatorDelegate(double arg1, double arg2);
+
+            private CalculatorDelegate calculateEvent;
+
+            public event CalculatorDelegate CalculateEvent
+            {
+                add
+                {
+                    calculateEvent += value;
+                    Console.WriteLine("Added the Delegate");
+                }
+                remove
+                {
+                    calculateEvent -= value;
+                    Console.WriteLine("Removed the Delegate");
+                }
             }
 
 
@@ -63,23 +85,7 @@ namespace CalculatorApplication
         }
 
 
-        public delegate double CalculatorDelegate(double arg1, double arg2);
-
-        private CalculatorDelegate calculateEvent;
-
-        public event CalculatorDelegate CalculateEvent
-        {
-            add
-            {
-                calculateEvent += value;
-                Console.WriteLine("Added the Delegate");
-            }
-            remove
-            {
-                calculateEvent -= value;
-                Console.WriteLine("Removed the Delegate");
-            }
-        }
+       
 
 
 
@@ -120,22 +126,47 @@ namespace CalculatorApplication
 
             if (op == "+")
             {
-                
+                cal.CalculateEvent += new CalculatorDelegate(cal.GetSum);
+                result = cal.GetSum(num1,num2);
+                cal.CalculateEvent -= new CalculatorDelegate(cal.GetSum);
+                lblDisplayTotal.Text = result.ToString();
             }
             else if (op == "-")
             {
-                DoubleType = cal.GetDifference;
+                cal.CalculateEvent += new CalculatorDelegate(cal.GetDifference);
+                result = cal.GetDifference(num1, num2);
+                cal.CalculateEvent -= new CalculatorDelegate(cal.GetDifference);
+                lblDisplayTotal.Text = result.ToString();
             }
             else if (op == "*")
             {
-                DoubleType = cal.GetProduct;
+                cal.CalculateEvent += new CalculatorDelegate(cal.GetProduct);
+                result = cal.GetProduct(num1, num2);
+                cal.CalculateEvent -= new CalculatorDelegate(cal.GetProduct);
+                lblDisplayTotal.Text = result.ToString();
             }
             else if (op == "/")
             {
-                DoubleType = cal.GetQuotient;
+                cal.CalculateEvent += new CalculatorDelegate(cal.GetQuotient);
+                try
+                {
+                    result = cal.GetQuotient(num1, num2);
+                    lblDisplayTotal.Text = result.ToString();
+                }
+                catch (DivideByZeroException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return; 
+                }
+                finally
+                {
+                    cal.CalculateEvent -= new CalculatorDelegate(cal.GetQuotient);
+                }
             }
 
-
+     
+            
         }
+
     }
 }

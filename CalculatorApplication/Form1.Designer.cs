@@ -119,11 +119,10 @@
             this.lblDisplayTotal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(98)))), ((int)(((byte)(106)))));
             this.lblDisplayTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.lblDisplayTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(241)))), ((int)(((byte)(199)))));
-            this.lblDisplayTotal.Location = new System.Drawing.Point(180, 153);
+            this.lblDisplayTotal.Location = new System.Drawing.Point(198, 153);
             this.lblDisplayTotal.Name = "lblDisplayTotal";
-            this.lblDisplayTotal.Size = new System.Drawing.Size(51, 20);
+            this.lblDisplayTotal.Size = new System.Drawing.Size(0, 20);
             this.lblDisplayTotal.TabIndex = 6;
-            this.lblDisplayTotal.Text = "label4";
             this.lblDisplayTotal.Click += new System.EventHandler(this.label4_Click);
             // 
             // btnEqual
